@@ -1,0 +1,13 @@
+#section1 {
+  font-family: Arial, sans-serif;
+  color: blue;
+}
+
+#section2 {
+  font-family: 'Times New Roman', serif;
+  color: green;
+}
+
+.hidden {
+  display: none;
+}

@@ -6,7 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const transformButton = document.getElementById("transformButton");
     const revertButton = document.getElementById("revertButton");
 
-    let words = ["apple", "grape", "banana"];
+    let expectedWords = ["apple", "grape", "banana"];
+    let words = [];
+
+    for (let i = 0; i < expectedWords.length; i++) {
+        let userWord = prompt(`Please enter the word "${expectedWords[i]}":`);
+        if (userWord !== null && userWord.toLowerCase() === expectedWords[i]) {
+            words.push(userWord);
+        } else {
+            alert(`You did not enter the word "${expectedWords[i]}". Please refresh and start again.`);
+            return; // Exit the function if the wrong word is entered
+        }
+    }
 
     function swapLetters(oneWord) {
         return oneWord.charAt(oneWord.length - 1) + oneWord.substring(1, oneWord.length - 1) + oneWord.charAt(0);
@@ -17,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
         listItem.textContent = word;
         wordList.appendChild(listItem);
     });
+
+    section1.style.display = 'block'; // Ensure section1 is visible initially
 
     transformButton.addEventListener("click", function () {
         const transformedWords = words.map(swapLetters);
@@ -40,31 +53,4 @@ document.addEventListener("DOMContentLoaded", function() {
         transformButton.classList.remove("hidden");
         revertButton.classList.add("hidden");
     });
-
-    let promptCount = 0;
-
-    function promptForWord() {
-        const userWord = prompt("Please enter a word (apple, grape, or banana):");
-        if (userWord !== null) {
-            if (userWord.toLowerCase() === "apple" || userWord.toLowerCase() === "grape" || userWord.toLowerCase() === "banana") {
-                promptCount++;
-                alert("Word entered: " + userWord);
-                if(promptCount === 3) {
-                    transformButton.disabled = false;
-                }
-            } else {
-                alert("Please enter one of the allowed words: apple, grape, or banana");
-            }
-        } else {
-            alert("No word entered");
-        }
-    }
-
-    transformButton.disabled = true;
-
-    setInterval(function() {
-        if(promptCount < 3) {
-            promptForWord();
-        }
-    }, 1000);
 });
